@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Six Buttons with Fire Effect</title>
+    <style>
+        /* Center the buttons container */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container for buttons */
+        .button-container {
+            display: grid;
+            grid-template-columns: repeat(2, 150px); /* Two buttons per row */
+            grid-gap: 20px;
+            justify-items: center;
+            align-items: center;
+        }
+
+        /* Styling each button */
+        .button {
+            width: 150px;
+            height: 150px;
+            border: none;
+            border-radius: 8px;
+            background-color: #808080; /* Gray color for the button */
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Styling the images inside buttons */
+        .button img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensures the image fills the button without distortion */
+        }
+
+        /* Hover effect with a red glow */
+        .button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px 10px rgba(255, 0, 0, 0.7), 0 0 30px rgba(255, 0, 0, 0.5); /* Red glow */
+            background-color: #9e9e9e; /* Slightly lighter gray on hover */
+        }
+
+        /* Optional: Add some text below the button if needed */
+        .button-text {
+            font-size: 12px;
+            color: #fff;
+            margin-top: 10px;
+        }
+
+        /* Fire animation for button hover */
+        .button::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle, rgba(255, 0, 0, 0.7) 0%, rgba(255, 99, 71, 0) 70%); /* Red fire glow */
+            animation: fire 1.5s infinite alternate;
+            opacity: 0;
+        }
+
+        /* Keyframes for fire animation */
+        @keyframes fire {
+            0% {
+                opacity: 0.7;
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-10px) scale(1.3);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="button-container">
+        <!-- Each button with an icon -->
+        <button class="button" onclick="goToPage('profile.html')">
+            <img src="profile.png" alt="Icon 1">
+        </button>
+        <button class="button" onclick="goToPage('gps.html')">
+            <img src="lc.png" alt="Icon 2">
+        </button>
+        <button class="button" onclick="goToPage('alert.html')">
+            <img src="at.png" alt="Icon 3">
+        </button>
+        <button class="button" onclick="goToPage('learn.html')">
+            <img src="lm.png" alt="Icon 4">
+        </button>
+        <button class="button" onclick="goToPage('feedback.html')">
+            <img src="ct.png" alt="Icon 5">
+        </button>
+        <button class="button" onclick="goToPage('index.html')">
+            <img src="lg.png" alt="Icon 6">
+        </button>
+    </div>
+
+    <script>
+        // Function to redirect to the page on button click
+        function goToPage(url) {
+            window.location.href = url;
+        }
+    </script>
+
+</body>
+</html>

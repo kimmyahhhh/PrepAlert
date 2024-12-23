@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Disasters Preparedness</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            overflow: hidden; /* Prevent scrolling */
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease-in-out; /* Smooth transition */
+            position: relative;
+        }
+
+        .container:hover {
+            box-shadow: 0 0 30px rgba(0, 0, 255, 1), 0 0 60px rgba(0, 0, 255, 0.5), 0 0 100px rgba(0, 0, 255, 0.2); /* Blue fire glow */
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        /* Optional: Add a subtle hover effect to buttons */
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+        #feedbackForm {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Natural Disasters Preparedness</h1>
+        
+        <h2>Preparedness Tips</h2>
+        <ul>
+            <li><strong>Typhoons:</strong> Prepare an emergency kit and know evacuation routes.</li>
+            <li><strong>Earthquakes:</strong> Secure heavy furniture and practice safety drills.</li>
+            <li><strong>Volcanic Eruptions:</strong> Have masks ready and know safe zones.</li>
+            <li><strong>Flooding:</strong> Identify flood-prone areas and create an emergency plan.</li>
+            <li><strong>Landslides:</strong> Be aware of warning signs and avoid high-risk areas.</li>
+            <li><strong>Tsunamis:</strong> Know evacuation routes and move to higher ground.</li>
+            <li><strong>Droughts:</strong> Implement water conservation practices.</li>
+        </ul>
+
+        <button class="button" onclick="showFeedbackForm()">Send Feedback</button>
+        <button class="button" onclick="goToDashboard()">Back to Dashboard</button>
+        
+        <div id="feedbackForm" style="display:none; margin-top: 20px;">
+            <h3>Feedback</h3>
+            <textarea id="feedback" rows="4" placeholder="Your feedback here..."></textarea><br>
+            <button class="button" onclick="submitFeedback()">Submit Feedback</button>
+        </div>
+    </div>
+
+    <script>
+        function showFeedbackForm() {
+            document.getElementById('feedbackForm').style.display = 'block';
+        }
+
+        function submitFeedback() {
+            const feedback = document.getElementById('feedback').value;
+            const email = "iygkmbrlygyl@gmail.com"; // The email to send feedback to
+            const subject = encodeURIComponent("Feedback on Natural Disasters Preparedness");
+            const body = encodeURIComponent(feedback); // The feedback content
+
+            // Open the user's email client with the pre-filled email
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+            
+            // Optionally, you can hide the feedback form after submission
+            document.getElementById('feedbackForm').style.display = 'none'; // Hide the form
+        }
+
+        function goToDashboard() {
+            window.location.href = 'dashboard.html'; // Redirect to dashboard
+        }
+    </script>
+
+</body>
+</html>

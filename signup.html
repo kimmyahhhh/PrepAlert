@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #181A2F, #37415C);
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        label {
+            font-size: 1.1em;
+            color: #333;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"], input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 1em;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 35px;
+            cursor: pointer;
+            font-size: 1.2em;
+            color: #009af8;
+        }
+
+        button {
+            background-color: #009af8;
+            color: white;
+            padding: 15px 25px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        button:hover {
+            background-color: #007acc;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.7);
+        }
+
+        .message {
+            color: red;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sign Up</h1>
+        <form id="signupForm" onsubmit="return validateForm(event)">
+            <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter a password" required>
+                <span class="toggle-password" id="togglePassword">👁️</span>
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                <span class="toggle-password" id="toggleConfirmPassword">👁️</span>
+            </div>
+            <div class="form-group">
+                <label for="profilePicture">Profile Picture</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*" required>
+            </div>
+            <button type="submit" class="button">Sign Up</button>
+        </form>
+        <p class="message" id="message"></p>
+    </div>
+
+    <script>
+        function validateForm(event) {
+            event.preventDefault(); 
+
+            const fullName = document.getElementById("fullName").value;
+            const username = document.getElementById("username").value;
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const profilePicture = document.getElementById("profilePicture").files[0];
+            const message = document.getElementById("message");
+
+            if (!fullName || !username || !email || !password || !confirmPassword || !profilePicture) {
+                message.textContent = "All fields are required.";
+                return false;
+            }
+
+            if (password !== confirmPassword) {
+                message.textContent = "Passwords do not match.";
+                return false;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                const userProfile = {
+                    fullName,
+                    username,
+                    email,
+                    password,
+                    profilePicture: reader.result,
+                };
+                localStorage.setItem("userProfile", JSON.stringify(userProfile));
+                message.style.color = "green";
+                message.textContent = "Sign up successful! Redirecting...";
+                setTimeout(() => window.location.href = "profile.html", 2000);
+            };
+            reader.readAsDataURL(profilePicture);
+        }
+
+        document.getElementById("togglePassword").addEventListener("click", function () {
+            const passwordInput = document.getElementById("password");
+            passwordInput.type = passwordInput.type === "password" ? "text" : "password";
+        });
+
+        document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+            const confirmPasswordInput = document.getElementById("confirmPassword");
+            confirmPasswordInput.type = confirmPasswordInput.type === "password" ? "text" : "password";
+        });
+    </script>
+</body>
+</html>

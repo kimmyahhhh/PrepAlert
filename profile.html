@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .container:hover {
+            box-shadow: 0 0 20px rgba(255, 165, 0, 0.8), 0 0 30px rgba(255, 69, 0, 0.8);
+            transform: scale(1.02);
+            animation: glow 1s infinite alternate;
+        }
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 165, 0, 0.8), 0 0 30px rgba(255, 69, 0, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 40px rgba(255, 165, 0, 1), 0 0 60px rgba(255, 69, 0, 1);
+            }
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-header img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #007BFF;
+        }
+        .profile-header h1 {
+            margin: 10px 0 5px 0;
+        }
+        .profile-header p {
+            color: #777;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-group input {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .save-button {
+            background-color: #007BFF;
+            color: white;
+            margin-right: 10px;
+        }
+        .save-button:hover {
+            background-color: #0056b3;
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: white;
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        @media (max-width: 600px) {
+            .container {
+                padding: 15px;
+            }
+            .profile-header img {
+                width: 80px;
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-header">
+            <img src="https://via.placeholder.com/100" alt="Profile Picture" id="profileImage">
+            <h1>Edit Profile</h1>
+            <p>Please fill out your information below:</p>
+        </div>
+        <form id="profileForm">
+            <div class="form-group">
+                <label for="profilePicture">Profile Picture</label>
+                <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+            </div>
+            <div class="form-group">
+                <label for="fullname">Full Name</label>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter new password">
+            </div>
+            <button type="button" class="save-button" onclick="saveProfile()">Save Changes</button>
+            <button type="button" class="back-button" onclick="goBack()">Back</button>
+        </form>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const userProfile = JSON.parse(localStorage.getItem("userProfile"));
+            if (userProfile) {
+                document.getElementById("fullname").value = userProfile.fullName;
+                document.getElementById("username").value = userProfile.username;
+                document.getElementById("email").value = userProfile.email;
+                document.getElementById("password").value = userProfile.password;
+                document.getElementById("profileImage").src = userProfile.profilePicture;
+            }
+        });
+
+        document.getElementById("profilePicture").addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("profileImage").src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function saveProfile() {
+            const updatedProfile = {
+                fullName: document.getElementById("fullname").value,
+                username: document.getElementById("username").value,
+                email: document.getElementById("email").value,
+                password: document.getElementById("password").value,
+                profilePicture: document.getElementById("profileImage").src,
+            };
+            localStorage.setItem("userProfile", JSON.stringify(updatedProfile));
+            alert("Profile updated successfully!");
+        }
+
+        function goBack() {
+            window.location.href = "dashboard.html";
+        }
+    </script>
+</body>
+</html>

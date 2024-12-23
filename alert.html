@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location-Based Disaster Alert Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full viewport height */
+        }
+        .alert-container {
+            max-width: 600px;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .alert-container:hover {
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 69, 0, 0.8);
+            transform: scale(1.02);
+            animation: glow 1s infinite alternate;
+        }
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 20px rgba(255, 0, 0, 0.8), 0 0 30px rgba(255, 69, 0, 0.8);
+            }
+            100% {
+                box-shadow: 0 0 40px rgba(255, 0, 0, 1), 0 0 60px rgba(255, 69, 0, 1);
+            }
+        }
+        .alert-button, .back-button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background-color 0.3s;
+        }
+        .alert-button:hover {
+            background-color: #FFD700; /* Yellow glow */
+            box-shadow: 0 0 20px rgba(255, 215, 0, 1), 0 0 30px rgba(255, 215, 0, 0.6);
+        }
+        .back-button {
+            background-color: #6c757d; /* Gray color for the back button */
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="alert-container">
+        <h1>Disaster Alert System</h1>
+        <p>Click the button below to check for disasters in your area based on your location.</p>
+        <button class="alert-button" onclick="getLocation()">Check Disaster Status</button>
+        <button class="back-button" onclick="goToDashboard()">Back to Dashboard</button>
+    </div>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            // Simulate disaster alerts based on coordinates
+            checkDisasters(latitude, longitude);
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+
+        function checkDisasters(latitude, longitude) {
+            // Simulating disaster alerts based on user's location
+            const disasters = {
+                typhoon: {
+                    alert: Math.random() < 0.5, // 50% chance of typhoon alert
+                    signalLevel: Math.floor(Math.random() * 4) // Signal level 0 to 3
+                },
+                volcanicEruption: Math.random() < 0.2, // 20% chance of volcanic eruption
+                tsunami: Math.random() < 0.1, // 10% chance of tsunami alert
+                earthquake: Math.random() < 0.3 // 30% chance of earthquake
+            };
+
+            let messages = [];
+
+            // Check for typhoon alert
+            if (disasters.typhoon.alert) {
+                let typhoonMessage = "Alert! There is a typhoon in your area.";
+                if (disasters.typhoon.signalLevel > 0) {
+                    typhoonMessage += " You are under Signal Number " + disasters.typhoon.signalLevel + ".";
+                }
+                messages.push(typhoonMessage);
+            }
+
+            // Check for volcanic eruption alert
+            if (disasters.volcanicEruption) {
+                messages.push("Alert! There is a volcanic eruption in your area.");
+            }
+
+            // Check for tsunami alert
+            if (disasters.tsunami) {
+                messages.push("Warning! A tsunami has been detected in your area.");
+            }
+
+            // Check for earthquake alert
+            if (disasters.earthquake) {
+                messages.push("Alert! An earthquake has been reported in your area.");
+            }
+
+            // Display messages or no alerts
+            if (messages.length > 0) {
+                alert(messages.join("\n"));
+            } else {
+                alert("No disaster alerts in your area.");
+            }
+        }
+
+        // Function to go back to the dashboard
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+
+</body>
+</html>
